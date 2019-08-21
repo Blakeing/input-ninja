@@ -19,6 +19,9 @@ import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
 import List from "@material-ui/core/List";
 import Drawer from "@material-ui/core/Drawer";
+import HomeIcon from "@material-ui/icons/Home";
+import DraftsIcon from "@material-ui/icons/Drafts";
+
 const useStyles = makeStyles(theme => ({
 	"@global": {
 		body: {
@@ -96,15 +99,32 @@ const Navbar = () => {
 		>
 			<div className={classes.sidebar} />
 			<Divider />
-			<List>
-				{["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-					<ListItem button key={text}>
-						<ListItemIcon>
-							{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-						</ListItemIcon>
-						<ListItemText primary={text} />
-					</ListItem>
-				))}
+			<Divider />
+			<List component="nav" aria-label="Main mailbox folders">
+				<ListItem button component={RouterLink} to="/">
+					<ListItemIcon>
+						<HomeIcon />
+					</ListItemIcon>
+					<ListItemText primary="Home" />
+				</ListItem>
+				<ListItem button component="a" href="/about">
+					<ListItemIcon>
+						<DraftsIcon />
+					</ListItemIcon>
+					<ListItemText primary="About" />
+				</ListItem>
+				<ListItem button component="a" href="/test">
+					<ListItemIcon>
+						<DraftsIcon />
+					</ListItemIcon>
+					<ListItemText primary="Test" />
+				</ListItem>
+				<ListItem button component="a" href="/form">
+					<ListItemIcon>
+						<DraftsIcon />
+					</ListItemIcon>
+					<ListItemText primary="Form" />
+				</ListItem>
 			</List>
 			<Divider />
 			<List>

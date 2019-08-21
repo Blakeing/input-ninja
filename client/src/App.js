@@ -2,6 +2,7 @@ import React, { Fragment } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "./components/pages/Home";
 import Pricing from "./components/pages/Pricing";
+import Form from "./components/survey/Form";
 import Test from "./components/pages/Test";
 import Checkout from "./components/checkout/Checkout";
 import Register from "./components/auth/Register";
@@ -11,6 +12,7 @@ import AlertState from "./context/alert/AlertState";
 import Alerts from "./components/layout/Alerts";
 import setAuthToken from "./utils/setAuthToken";
 import PrivateRoute from "./components/routing/PrivateRoute";
+import InnerForm from "./components/pages/InnerForm";
 
 if (localStorage.token) {
 	setAuthToken(localStorage.token);
@@ -30,7 +32,9 @@ const App = () => {
 								<Route exact path="/pricing" component={Pricing} />
 								<Route exact path="/register" component={Register} />
 								<Route exact path="/login" component={Login} />
+								<Route exact path="/form" component={Form} />
 								<Route exact path="/test" component={Test} />
+								<Route exact path="/innerform" component={InnerForm} />
 							</Switch>
 						</div>
 					</Fragment>

@@ -18,18 +18,20 @@ import Hidden from "@material-ui/core/Hidden";
 import IconButton from "@material-ui/core/IconButton";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
+import DraftsIcon from "@material-ui/icons/Drafts";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
+import HomeIcon from "@material-ui/icons/Home";
 import MenuIcon from "@material-ui/icons/Menu";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import React, { useContext, useEffect } from "react";
+import { Link as RouterLink } from "react-router-dom";
 import AuthContext from "../../context/auth/authContext";
 import AddressForm from "../checkout/AddressForm";
 import PaymentForm from "../checkout/PaymentForm";
 import Review from "../checkout/Review";
-import HomeIcon from "@material-ui/icons/Home";
-import DraftsIcon from "@material-ui/icons/Drafts";
-import { Link as RouterLink } from "react-router-dom";
+import Test from "../pages/Test";
+import Form from "../survey/Form";
 
 const drawerWidth = 240;
 
@@ -108,7 +110,13 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function getSteps() {
-	return ["Input Data", "Site Information", "Review your order"];
+	return [
+		"Address Form",
+		"Payment Form",
+		"Review your order",
+		"Multistep / Form Wizard",
+		"React Wizard Form"
+	];
 }
 
 function getStepContent(step) {
@@ -119,6 +127,10 @@ function getStepContent(step) {
 			return <PaymentForm />;
 		case 2:
 			return <Review />;
+		case 3:
+			return <Test />;
+		case 4:
+			return <Form />;
 		default:
 			return "Unknown step";
 	}
@@ -129,16 +141,10 @@ function ResponsiveDrawer(props) {
 	const classes = useStyles();
 	const theme = useTheme();
 	const [mobileOpen, setMobileOpen] = React.useState(false);
-
-	function handleDrawerToggle() {
-		setMobileOpen(!mobileOpen);
-	}
-
 	const [activeStep, setActiveStep] = React.useState(0);
 	const [completed, setCompleted] = React.useState({});
 	const steps = getSteps();
 	const [open, setOpen] = React.useState(true);
-
 	const authContext = useContext(AuthContext);
 
 	useEffect(() => {
@@ -146,6 +152,9 @@ function ResponsiveDrawer(props) {
 		// eslint-disable-next-line
 	}, []);
 
+	function handleDrawerToggle() {
+		setMobileOpen(!mobileOpen);
+	}
 	function totalSteps() {
 		return steps.length;
 	}
@@ -176,10 +185,6 @@ function ResponsiveDrawer(props) {
 		setActiveStep(prevActiveStep => prevActiveStep - 1);
 	}
 
-	const handleStep = step => () => {
-		setActiveStep(step);
-	};
-
 	function handleComplete() {
 		const newCompleted = completed;
 		newCompleted[activeStep] = true;
@@ -196,6 +201,10 @@ function ResponsiveDrawer(props) {
 		setOpen(!open);
 	}
 
+	const handleStep = step => () => {
+		setActiveStep(step);
+	};
+
 	const drawer = (
 		<div className={classes.list} role="presentation">
 			<div className={classes.toolbar} />
@@ -207,23 +216,17 @@ function ResponsiveDrawer(props) {
 					</ListItemIcon>
 					<ListItemText primary="Home" />
 				</ListItem>
-				<ListItem button component="a" href="/about">
-					<ListItemIcon>
-						<DraftsIcon />
-					</ListItemIcon>
-					<ListItemText primary="About" />
-				</ListItem>
 				<ListItem button component="a" href="/test">
 					<ListItemIcon>
 						<DraftsIcon />
 					</ListItemIcon>
 					<ListItemText primary="Test" />
 				</ListItem>
-				<ListItem button component="a" href="/shows">
+				<ListItem button component="a" href="/form">
 					<ListItemIcon>
 						<DraftsIcon />
 					</ListItemIcon>
-					<ListItemText primary="Shows" />
+					<ListItemText primary="Form" />
 				</ListItem>
 			</List>
 			<Divider />
